@@ -13,14 +13,15 @@ import java.util.List;
 
 public class Lox {
 //> Evaluating Expressions interpreter-instance
-  private static final Interpreter interpreter = new Interpreter();           // static method means it belongs to the class, not object /line 16
+  private static final Interpreter interpreter = new Interpreter();           // static field means it belongs to the class, not object /line 16
                                                                               // can be called without creating object /line 16
 //< Evaluating Expressions interpreter-instance
 //> had-error
   static boolean hadError = false;
 //< had-error
 //> Evaluating Expressions had-runtime-error-field
-  static boolean hadRuntimeError = false;                                     // static variable means it creates one copy of objects  /line 20
+  static boolean hadRuntimeError = false;                                     /* static variable means it creates one copy of objects 
+                                                                               which is called single source of failure. Description, Down.  */
 
 //< Evaluating Expressions had-runtime-error-field                            
 
@@ -30,8 +31,8 @@ public class Lox {
                                                                                
   public static void main(String[] args) throws IOException {         // For production grade always safer to handle Trycatch Exception handling 
     if (args.length > 1) {                                            // If it fails, the exception bubbles up to the JVM
-      System.out.println("Usage: jlox [script]");
-      System.exit(64); // [64]
+      System.out.println("Usage: jlox [script]");                     // This is abstraction part that's the main function 
+      System.exit(64); // [64]                                        //Java meets operating system executing abstraction
     } else if (args.length == 1) {
       runFile(args[0]);
     } else {
@@ -39,13 +40,13 @@ public class Lox {
     }
   }
 //> run-file
-  private static void runFile(String path) throws IOException {   // same reason, fewer lines of code, but doesn't avoid the stack trace problem 
-    byte[] bytes = Files.readAllBytes(Paths.get(path));            // stack trace --> how did we get there, and how we could handle the exception, reverse engineering to the route path 
+  private static void runFile(String path) throws IOException {    // same reason, fewer lines of code, but doesn't avoid the stack trace problem 
+    byte[] bytes = Files.readAllBytes(Paths.get(path));            // stack trace --> how did we get there, and how could we handle the exception, reverse engineering to the route path 
     run(new String(bytes, Charset.defaultCharset()));
 //> exit-code
 
     // Indicate an error in the exit code.
-    if (hadError) System.exit(65);
+    if (hadError) System.exit(65);                                //specific different exit codes 
 //< exit-code
 //> Evaluating Expressions check-runtime-error
     if (hadRuntimeError) System.exit(70);
@@ -57,7 +58,7 @@ public class Lox {
     InputStreamReader input = new InputStreamReader(System.in);
     BufferedReader reader = new BufferedReader(input);
 
-    for (;;) { // [repl]                                   //unlimited loop 
+    for (;;) { // [repl]                                       //unlimited loop 
       System.out.print("> ");
       String line = reader.readLine();
       if (line == null) break;
