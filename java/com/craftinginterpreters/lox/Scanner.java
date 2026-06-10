@@ -3,7 +3,7 @@ package com.craftinginterpreters.lox;
 
 import java.util.ArrayList;  // Import list data structure
 import java.util.HashMap;    // Import hash map for keyword lookup
-import java.util.List;       // Import List interface
+import java.util.List;       // Import List interface to export as inetrface
 import java.util.Map;        // Import Map interface
 
 // Static import: brings TokenType enum values directly into scope
